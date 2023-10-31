@@ -10,7 +10,9 @@ class MainFrameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var myKey = GlobalKey(debugLabel: "router");
     return AutoTabsRouter(
+      key: myKey,
       routes: const [
         TabARoute(),
         TabBRoute(),
