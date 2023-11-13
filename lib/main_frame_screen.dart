@@ -10,12 +10,13 @@ class MainFrameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var myKey = GlobalKey(debugLabel: "router");
+    // var myKey = GlobalKey(debugLabel: "router");
     return AutoTabsRouter(
-      key: myKey,
+      // key: myKey,
+      lazyLoad: false,
       routes: const [
-        TabARoute(),
-        TabBRoute(),
+        ATab(),
+        BTab(),
       ],
       transitionBuilder: (context, child, animation) => FadeTransition(
         opacity: animation,
