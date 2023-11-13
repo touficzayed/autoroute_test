@@ -12,8 +12,6 @@ class MainFrameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // var myKey = GlobalKey(debugLabel: "router");
     return AutoTabsRouter(
-      // key: myKey,
-      lazyLoad: false,
       routes: const [
         ATab(),
         BTab(),
@@ -23,9 +21,7 @@ class MainFrameScreen extends StatelessWidget {
         child: child,
       ),
       builder: (context, child) {
-        final tabsRouter = AutoTabsRouter.of(context);
         return AppFrame(
-          tabsRouter: tabsRouter,
           child: child,
         );
         // return child;
