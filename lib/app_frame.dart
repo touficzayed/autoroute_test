@@ -1,10 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:autoroute_test/frames/avatar_drawer.dart';
 import 'package:flutter/material.dart';
-
-import 'frames/app_frame_desktop.dart';
-import 'frames/app_frame_laptop.dart';
-import 'frames/app_frame_mobile.dart';
-import 'frames/app_frame_tablet.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
 
 class AppFrame extends StatelessWidget {
   final Widget child;
@@ -13,23 +10,36 @@ class AppFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    if (size.width >= 1600) {
-      // return const AppFrameUhd();
-      //TODO:implements uhd frame
-    }
-    if (size.width >= 1200) {
-      return AppFrameDesktop(
-        tabsRouter: tabsRouter,
-        child: child,
-      );
-    }
-    if (size.width >= 720) {
-      return AppFrameLaptop(tabsRouter: tabsRouter, child: child);
-    }
-    if (size.width >= 375) {
-      return AppFrameTablet(tabsRouter: tabsRouter, child: child);
-    }
-    return AppFrameMobile(tabsRouter: tabsRouter, child: child);
+    final breakpoints = ResponsiveBreakpoints.of(context);
+    return Scaffold(
+      // appBar: AppBar(title: Text(tabsRouter.current.title(context))),
+      // endDrawer: const AvatarDrawer(),
+      body: Row(
+        children: [
+          NavigationRail(
+            extended: breakpoints.isDesktop,
+            destinations: const [
+              NavigationRailDestination(
+                  icon: Icon(Icons.home), label: Text("A")),
+              NavigationRailDestination(
+                  label: Text("B"), icon: Icon(Icons.search)),
+            ],
+            selectedIndex: tabsRouter.activeIndex,
+            onDestinationSelected: tabsRouter.setActiveIndex,
+          ),
+          Expanded(child: child),
+          if (breakpoints.largerOrEqualTo(DESKTOP))
+            const Row(
+              children: [
+                VerticalDivider(width: 1),
+                SizedBox(
+                  width: 250,
+                  child: AvatarDrawer(),
+                )
+              ],
+            )
+        ],
+      ),
+    );
   }
 }
